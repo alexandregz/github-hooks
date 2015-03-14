@@ -17,4 +17,4 @@ fi
 
 MSG_MAIL=$MSG_MAIL"\n\n"$(git log --name-status HEAD^..HEAD|sed ':a;N;$!ba;s/\n/\\n/g')
 
-echo -e $MSG_MAIL|mail -s "Commit API Dominios "$HOSTNAME aemenor@gmail.com
+echo -e $MSG_MAIL|mail -s "Commit "$HOSTNAME aemenor@gmail.com
