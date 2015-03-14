@@ -1,0 +1,20 @@
+#!/bin/bash
+#
+# To enable this hook, rename this file to "post-commit".
+
+
+ip_alexandregz="192.168.1.9"
+ip_alexandregz_container="192.168.100.1"
+
+IPS_AUTORIZADAS=( $ip_alexandregz $ip_alexandregz_container )
+
+IP_CLIENTE="${SSH_CLIENT%% *}"
+
+MSG_MAIL=$SSH_CLIENT
+if [[ ! " ${IPS_AUTORIZADAS[*]} " =~ " $IP_CLIENTE " ]]; then
+        MSG_MAIL=$MSG_MAIL" IP NOM AUTORIZADA!!"
+fi
+
+MSG_MAIL=$MSG_MAIL"\n\n"$(git log --name-status HEAD^..HEAD|sed ':a;N;$!ba;s/\n/\\n/g')
+
+echo -e $MSG_MAIL|mail -s "Commit API Dominios "$HOSTNAME aemenor@gmail.com
